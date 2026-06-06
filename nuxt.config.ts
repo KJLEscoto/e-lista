@@ -3,12 +3,11 @@ import tailwindcss from "@tailwindcss/vite";
 
 const siteTitle = "E-Lista | KinWebb";
 const siteDescription =
-  "A mindful habit tracker designed to keep you consistent — track your daily habits, celebrate streaks, and stay inspired with a fresh quote and nature photo every day. Designed and developed by KinWebb. © 2026 Kent Joemar Escoto.";
+  "E-Lista is a simple and reliable inventory and debtor tracking system designed for small businesses and sari-sari stores. Designed and developed by KinWebb. © 2026 Kent Joemar Escoto.";
 const siteVerification = "eMMfU0WDt9Hz-TWRGBTQY-mgFsF66m9octorJRumMzQ";
-const siteThumbnail = "https://dailyz.netlify.app/images/thumbnail.png";
-const webIcon = "/images/web_icon.png";
-const iosIcon = "/images/ios_icon.png";
-
+// const siteThumbnail = "https://dailyz.netlify.app/images/thumbnail.png";
+// const webIcon = "/images/web_icon.png";
+// const iosIcon = "/images/ios_icon.png";
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -20,22 +19,6 @@ export default defineNuxtConfig({
     ],
   },
   modules: ["@nuxt/fonts", 'kinwebb-attribute', '@pinia/nuxt', '@nuxt/icon'],
-  // fonts: {
-  //   families: [
-  //     {
-  //       name: "Nunito",
-  //       provider: "google",
-  //       weights: [200, 300, 400, 500, 600, 700, 800, 900, 1000],
-  //       styles: ["normal"],
-  //     },
-  //     {
-  //       name: "Hanken Grotesk",
-  //       provider: "google",
-  //       weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
-  //       styles: ["normal"],
-  //     },
-  //   ],
-  // },
   app: {
     head: {
       title: siteTitle,
@@ -53,7 +36,7 @@ export default defineNuxtConfig({
         { property: "og:type", content: "website" },
         { property: "og:title", content: siteTitle },
         { property: "og:description", content: siteDescription },
-        { property: "og:image", content: siteThumbnail },
+        // { property: "og:image", content: siteThumbnail },
         { property: "og:image:width", content: "1200" },
         { property: "og:image:height", content: "630" },
         { property: "og:image:type", content: "image/png" },
@@ -62,16 +45,15 @@ export default defineNuxtConfig({
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: siteTitle },
         { name: "twitter:description", content: siteDescription },
-        { name: "twitter:image", content: siteThumbnail },
+        // { name: "twitter:image", content: siteThumbnail },
       ],
       link: [
-        { rel: 'icon', type: 'image/png', href: webIcon },
-        { rel: 'apple-touch-icon', href: iosIcon },
+        // { rel: 'icon', type: 'image/png', href: webIcon },
+        // { rel: 'apple-touch-icon', href: iosIcon },
       ],
     },
   },
-  runtimeConfig: {  
-    unsplashKey: process.env.NUXT_PUBLIC_UNSPLASH_KEY,
+  runtimeConfig: { 
     public: {
       firebaseApiKey: '',
       firebaseAuthDomain: '',
@@ -79,7 +61,6 @@ export default defineNuxtConfig({
       firebaseStorageBucket: '',
       firebaseMessagingSenderId: '',
       firebaseAppId: '',
-      firebaseMeasurementId: '',
     },
   },
 })
