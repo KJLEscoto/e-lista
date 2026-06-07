@@ -4,7 +4,6 @@ import type { Habit, HabitTime } from '~/types/habit'
 import { addDoc, getDocs, doc, deleteDoc, updateDoc, collection, type Firestore } from 'firebase/firestore'
 import { format, differenceInDays } from 'date-fns'
 import type { Auth } from 'firebase/auth'
-import { useLevelStore } from '~/stores/level'
 
 export const useHabitStore = defineStore('habitStore', {
   state: () => ({
@@ -117,8 +116,6 @@ export const useHabitStore = defineStore('habitStore', {
             const currentXp = snap.exists() ? (snap.data().totalXp ?? 0) : 0
             const newXp = Math.max(0, currentXp - (completionsToday * 15))
 
-            const levelStore = useLevelStore()
-            levelStore.totalXp = newXp
             await setDoc(levelRef, { totalXp: newXp })
           } catch (e) {
             console.error('XP deduct on delete error:', e)
@@ -153,9 +150,6 @@ export const useHabitStore = defineStore('habitStore', {
         const levelRef = doc($firebase.db, 'users', uid, 'level', 'data')
         const delta = isCompletingToday ? 15 : -15
 
-        // 👇 update store immediately for instant UI response
-        const levelStore = useLevelStore()
-        levelStore.totalXp = Math.max(0, levelStore.totalXp + delta)
 
         // 👇 then write to Firestore in background
         const snap = await getDoc(levelRef)

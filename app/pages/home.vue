@@ -134,10 +134,10 @@ const addHabit = () => {
       <!-- hidden file input -->
       <input ref="fileInputRef" type="file" accept=".json" class="hidden" @change="handleImportFile" />
 
-      <span v-if="todoHabits.length || completedHabits.length">
+      <!-- <span v-if="todoHabits.length || completedHabits.length">
         <AuthAppHeader :formatted="formatted" :completed-count="completedCount" :habits-count="habitsCount"
           :percentage-completed="percentageCompleted" />
-      </span>
+      </span> -->
 
       <div class="space-y-3">
         <div v-if="!todoHabits.length && !completedHabits.length"

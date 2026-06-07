@@ -6,8 +6,8 @@ const siteDescription =
   "E-Lista is a simple and reliable inventory and debtor tracking system designed for small businesses and sari-sari stores. Designed and developed by KinWebb. © 2026 Kent Joemar Escoto.";
 const siteVerification = "eMMfU0WDt9Hz-TWRGBTQY-mgFsF66m9octorJRumMzQ";
 // const siteThumbnail = "https://dailyz.netlify.app/images/thumbnail.png";
-// const webIcon = "/images/web_icon.png";
-// const iosIcon = "/images/ios_icon.png";
+const webIcon = "/images/web_icon.png";
+const iosIcon = "/images/ios_icon.png";
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -48,8 +48,8 @@ export default defineNuxtConfig({
         // { name: "twitter:image", content: siteThumbnail },
       ],
       link: [
-        // { rel: 'icon', type: 'image/png', href: webIcon },
-        // { rel: 'apple-touch-icon', href: iosIcon },
+        { rel: 'icon', type: 'image/png', href: webIcon },
+        { rel: 'apple-touch-icon', href: iosIcon },
       ],
     },
   },

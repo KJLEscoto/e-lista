@@ -1,7 +1,5 @@
 <!-- pages/login.vue -->
 <script setup lang="ts">
-import { Info } from '@lucide/vue'
-
 const { signIn, signInWithGoogle, processingRedirect } = useAuth()
 
 const route = useRoute()
@@ -11,6 +9,11 @@ onMounted(() => {
     emailAddress.value = (route.query.email as string) ?? ''
   }
 })
+
+// typed ref for UIInput instances
+type InputRef = { focus: () => void }
+const emailRef = ref<InputRef | null>(null)
+const passwordRef = ref<InputRef | null>(null)
 
 const state = import.meta.client ? history.state : {}
 const emailAddress = ref((state?.email as string) ?? '')
@@ -145,17 +148,22 @@ const handleGoogleLogin = async () => {
 const handleLogin = async () => {
   emailError.value = ''
   passwordError.value = ''
+  await nextTick() // flush cleared errors
 
-  let hasError = false
-  if (!emailAddress.value.trim()) {
-    emailError.value = 'Email address is required.'
-    hasError = true
+  if (!emailAddress.value.trim()) emailError.value = 'Email address is required.'
+  if (!password.value.trim()) passwordError.value = 'Password is required.'
+
+  await nextTick() // flush new errors — refs now reflect correct state
+
+  const fields = [
+    { ref: emailRef, error: emailError.value },
+    { ref: passwordRef, error: passwordError.value },
+  ]
+  const first = fields.find(f => f.error)
+  if (first) {
+    first.ref.value?.focus()
+    return
   }
-  if (!password.value.trim()) {
-    passwordError.value = 'Password is required.'
-    hasError = true
-  }
-  if (hasError) return
 
   if (checkEmailLockout(emailAddress.value)) return
 
@@ -190,6 +198,13 @@ const handleLogin = async () => {
     }
   } finally {
     isLoading.value = false
+    // focus first errored field after server errors too
+    await nextTick()
+    const fields = [
+      { ref: emailRef, error: emailError.value },
+      { ref: passwordRef, error: passwordError.value },
+    ]
+    fields.find(f => f.error)?.ref.value?.focus()
   }
 }
 </script>
@@ -201,13 +216,14 @@ const handleLogin = async () => {
 
   <section class="text-center space-y-3">
     <h1 class="text-4xl font-bold text-primary">Welcome back!</h1>
-    <p class="text-muted">Sign in to continue building your habits.</p>
+    <p class="text-muted">Sign in to track your sales and inventory.</p>
   </section>
 
-  <form class="w-full bg-white rounded-4xl md:p-10 p-6 space-y-10 h-full shadow-lg" @submit.prevent="handleLogin">
+  <form class="w-full space-y-10 h-full" @submit.prevent="handleLogin">
 
     <!-- Google Sign In -->
-    <button @click="handleGoogleLogin" type="button" :disabled="isAnyLoading" class="w-full h-auto py-3 px-10 shrink-0 bg-muted/10 rounded-2xl flex items-center justify-center gap-3
+    <button @click="handleGoogleLogin" type="button" :disabled="isAnyLoading"
+      class="w-full h-auto py-3 px-10 shrink-0 bg-muted/10 rounded-2xl flex items-center justify-center gap-3
       cursor-pointer hover:bg-muted/20 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 ease-in-out">
       <Image v-if="!isGoogleLoading" src="/images/webp/google.webp" alt="Sign in with Google" class="size-6!" />
       <div v-else class="size-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
@@ -236,28 +252,22 @@ const handleLogin = async () => {
       </Transition>
 
       <div class="space-y-5">
-        <FormField v-model="emailAddress" label="email address" type="email" placeholder="hello@example.com"
-          :error="emailError" :disabled="isAnyLoading" required />
-        <FormField v-model="password" label="password" type="password" placeholder="••••••••"
-          :disabled="isAnyLoading || isLockedOut" required />
+        <UIInput ref="emailRef" v-model="emailAddress" label="Email" type="email" placeholder="you@example.com"
+          :error="emailError" :disabled="isAnyLoading || isLockedOut" required />
 
-        <!-- password error with bold support -->
-        <p v-if="passwordError" class="flex items-center gap-1 text-xs text-red-400 -mt-3">
-          <Info class="size-3 shrink-0" />
-          <span v-html="passwordError" />
-        </p>
+        <UIInput ref="passwordRef" v-model="password" label="Password" type="password" placeholder="••••••••"
+          :error="passwordError" :disabled="isAnyLoading || isLockedOut" required />
 
-        <button type="button" :disabled="isAnyLoading" @click="showForgotPassword = true"
-          class="text-sm text-primary cursor-pointer w-fit hover:underline disabled:opacity-50 disabled:cursor-not-allowed">
+        <UIButton type="button" variant="link" :disabled="isAnyLoading" @click="showForgotPassword = true">
           Forgot Password?
-        </button>
+        </UIButton>
       </div>
 
       <ModalForgotPassword v-model="showForgotPassword" />
 
-      <Button type="submit" size="lg" block :disabled="isAnyLoading || isLockedOut">
+      <UIButton type="submit" size="lg" block :disabled="isAnyLoading || isLockedOut">
         <p>{{ isLoading ? 'Signing in...' : isGoogleLoading ? 'Signing In...' : 'Sign In' }}</p>
-      </Button>
+      </UIButton>
 
       <p class="text-sm text-muted text-center">
         Don't have an account?
