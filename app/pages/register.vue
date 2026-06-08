@@ -123,25 +123,32 @@ const handleRegister = async () => {
 
   <section class="text-center space-y-3">
     <h1 class="text-4xl font-bold text-primary">Create an Account</h1>
-    <p class="text-muted">Sign up to start building your habits.</p>
+    <p class="text-muted">Fill in the details below to create your account.</p>
   </section>
 
-  <form class="w-full bg-white rounded-4xl md:p-10 p-6 space-y-10 h-full shadow-lg" @submit.prevent="handleRegister">
+  <form class="w-full space-y-10 h-full" @submit.prevent="handleRegister">
     <section class="space-y-6">
       <div class="space-y-5">
-        <FormField v-model="fullName" label="Full Name" type="text" placeholder="John Doe" :error="fullNameError"
-          :disabled="isAnyLoading" required />
-        <FormField v-model="emailAddress" label="Email Address" type="email" placeholder="john@gmail.com"
+
+          <UIInput v-model="fullName" label="Full Name" type="text" placeholder="John Doe"
+          :error="fullNameError" :disabled="isAnyLoading" required />
+
+          <UIInput v-model="emailAddress" label="Email" type="email" placeholder="you@example.com"
           :error="emailError" :disabled="isAnyLoading" required />
-        <FormField v-model="password" label="Password" type="password" placeholder="••••••••" :error="passwordError"
-          :disabled="isAnyLoading" required />
+
+          <UIInput  v-model="password" label="Password" type="password" placeholder="••••••••"
+          :error="passwordError" :disabled="isAnyLoading" required />
+
+          <UIInput  v-model="confirmPassword" label="Confirm Password" type="password" placeholder="••••••••"
+          :error="confirmPasswordError" :disabled="isAnyLoading" required />
+
         <FormField v-model="confirmPassword"  label="Confirm Password" type="password" placeholder="••••••••"
           :error="confirmPasswordError" :disabled="isAnyLoading" required />
       </div>
 
-      <Button type="submit" size="lg" block :disabled="isAnyLoading">
+      <UIButton type="submit" block :disabled="isAnyLoading">
         <p>{{ isLoading ? 'Creating account...' : isGoogleLoading ? 'Signing up with Google...' : 'Register' }}</p>
-      </Button>
+      </UIButton>
 
       <div class="flex items-center gap-3">
         <hr class="border-muted/20 w-full" />
@@ -159,7 +166,9 @@ const handleRegister = async () => {
 
       <p class="text-sm text-muted text-center">
         Already have an account?
-        <NuxtLink to="/login" class="text-primary hover:underline">Sign In</NuxtLink>
+        <UIButton class="text-sm!" type="button" variant="link" to="/login">
+          Sign In
+        </UIButton>
       </p>
     </section>
   </form>

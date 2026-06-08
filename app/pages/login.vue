@@ -216,7 +216,7 @@ const handleLogin = async () => {
 
   <section class="text-center space-y-3">
     <h1 class="text-4xl font-bold text-primary">Welcome back!</h1>
-    <p class="text-muted">Sign in to track your sales and inventory.</p>
+    <p class="text-muted">Sign in to continue managing your account.</p>
   </section>
 
   <form class="w-full space-y-10 h-full" @submit.prevent="handleLogin">
@@ -224,7 +224,7 @@ const handleLogin = async () => {
     <!-- Google Sign In -->
     <button @click="handleGoogleLogin" type="button" :disabled="isAnyLoading"
       class="w-full h-auto py-3 px-10 shrink-0 bg-muted/10 rounded-2xl flex items-center justify-center gap-3
-      cursor-pointer hover:bg-muted/20 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 ease-in-out">
+      cursor-pointer hover:bg-muted/20 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed">
       <Image v-if="!isGoogleLoading" src="/images/webp/google.webp" alt="Sign in with Google" class="size-6!" />
       <div v-else class="size-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
       <p class="text-nowrap">{{ isGoogleLoading ? 'Signing in...' : 'Sign in with Google' }}</p>
@@ -258,7 +258,7 @@ const handleLogin = async () => {
         <UIInput ref="passwordRef" v-model="password" label="Password" type="password" placeholder="••••••••"
           :error="passwordError" :disabled="isAnyLoading || isLockedOut" required />
 
-        <UIButton type="button" variant="link" :disabled="isAnyLoading" @click="showForgotPassword = true">
+        <UIButton class="text-sm!" type="button" variant="link" :disabled="isAnyLoading" @click="showForgotPassword = true">
           Forgot Password?
         </UIButton>
       </div>
@@ -271,7 +271,9 @@ const handleLogin = async () => {
 
       <p class="text-sm text-muted text-center">
         Don't have an account?
-        <NuxtLink to="/register" class="text-primary hover:underline">Sign Up</NuxtLink>
+        <UIButton class="text-sm!" type="button" variant="link" to="/register">
+          Sign Up
+        </UIButton>
       </p>
     </section>
   </form>
