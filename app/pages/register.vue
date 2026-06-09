@@ -133,7 +133,7 @@ const handleRegister = async () => {
           <UIInput v-model="fullName" label="Full Name" type="text" placeholder="John Doe"
           :error="fullNameError" :disabled="isAnyLoading" required />
 
-          <UIInput v-model="emailAddress" label="Email" type="email" placeholder="you@example.com"
+          <UIInput v-model="emailAddress" label="Email Address" type="email" placeholder="you@example.com"
           :error="emailError" :disabled="isAnyLoading" required />
 
           <UIInput  v-model="password" label="Password" type="password" placeholder="••••••••"

@@ -1,25 +1,18 @@
 <script setup lang="ts">
-import { Home, BarChart2, User2, Plus } from '@lucide/vue'
+import { Home, Plus, Archive, UsersRound, ClipboardCopy } from '@lucide/vue'
 
 const navItems = [
   { to: '/home', icon: Home, label: 'Home' },
-  { to: '/stats', icon: BarChart2, label: 'Stats' },
-  { to: '/profile', icon: User2, label: 'Profile' },
+  { to: '/inventory', icon: Archive, label: 'Inventory' },
+  { to: '/debtors', icon: UsersRound, label: 'Debtors' },
+  { to: '/history', icon: ClipboardCopy, label: 'History' },
 ]
 
 const modalAddRef = ref()
-const showLimitAlert = ref(false) // 👈
 
 const addHabit = () => {
-  if (modalAddRef.value?.dailyLimitReached) {
-    showLimitAlert.value = true // 👈 show alert instead
-    return
-  }
   modalAddRef.value?.addHabit()
 }
-
-const dailyLimitReached = computed(() => modalAddRef.value?.dailyLimitReached ?? false)
-const habitsAddedToday = computed(() => modalAddRef.value?.habitsAddedToday ?? 0)
 
 const isNavVisible = ref(true)
 const lastScrollY = ref(0)
@@ -31,11 +24,7 @@ const handleScroll = () => {
     lastScrollY.value = currentScrollY
     return
   }
-  if (currentScrollY > lastScrollY.value) {
-    isNavVisible.value = false
-  } else {
-    isNavVisible.value = true
-  }
+  isNavVisible.value = currentScrollY < lastScrollY.value
   lastScrollY.value = currentScrollY
 }
 
@@ -50,32 +39,26 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <!-- 👇 daily limit alert -->
-  <Alert type="danger" title="Daily limit reached (5/5)!"
-    :message="`You've added 5 habits today. Come back tomorrow to add more!`"
-    :visible="showLimitAlert" :timeout="4000" @dismiss="showLimitAlert = false" />
-
-  <nav class="fixed bottom-4 left-0 w-full z-50 transition-transform duration-300 ease-in-out select-none"
+  <nav class="fixed bottom-0 left-0 w-full z-50 transition-transform duration-300 ease-in-out select-none"
     :class="isNavVisible ? 'translate-y-0' : 'translate-y-[130%]'">
-    <div class="w-full h-fit max-w-xl mx-auto px-4 flex items-stretch gap-3">
+    <div class="w-full max-w-md mx-auto px-4 flex flex-col items-center relative"
+      :style="{ paddingBottom: 'max(env(safe-area-inset-bottom), 14px)' }">
+      <!-- FAB: floats above the nav bar -->
+      <button @click="addHabit"
+        class="absolute right-5 -top-20 z-10 flex items-center justify-center size-16 rounded-3xl shadow-md shadow-black/30 bg-primary active:scale-95 transition-all duration-150 ease-in-out cursor-pointer">
+        <Plus class="size-6 text-white pointer-events-none shrink-0" />
+      </button>
+
+      <!-- Nav bar: full width, extra top padding to clear the FAB overlap -->
       <section
-        class="bg-white w-full border border-muted/20 rounded-3xl md:p-3 p-2 flex items-center justify-around shadow-xl">
+        class="bg-white w-full rounded-3xl p-2 flex items-end justify-around shadow-lg">
         <NuxtLink v-for="item in navItems" :key="item.to" :to="item.to"
-          class="flex flex-col items-center gap-1 px-6 py-3 rounded-2xl transition-all w-full duration-200 text-muted hover:text-primary active:scale-95 ease-in-out"
+          class="flex flex-col items-center gap-1.5 px-4 py-2 rounded-2xl transition-all w-full duration-200 text-muted hover:text-primary active:scale-95 ease-in-out"
           active-class="text-primary bg-primary/10">
-          <component :is="item.icon" class="size-4 pointer-events-none" />
+          <component :is="item.icon" class="size-4.5 pointer-events-none" />
           <p class="md:text-sm text-xs">{{ item.label }}</p>
         </NuxtLink>
       </section>
-
-      <button @click="addHabit" :class="[
-        'flex items-center justify-center py-4 px-8 rounded-3xl shadow-2xl self-stretch min-w-[20%] w-auto border active:scale-95 transition-all duration-150 ease-in-out',
-        dailyLimitReached
-          ? 'bg-muted border-black/20 cursor-not-allowed'
-          : 'bg-primary border-black/40 cursor-pointer'
-      ]">
-        <Plus class="size-6 text-white pointer-events-none shrink-0" />
-      </button>
     </div>
   </nav>
 

@@ -20,6 +20,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   if (processingRedirect.value) return
 
-  if (!user.value && protectedRoutes.includes(to.path)) return navigateTo('/')
+  if (!user.value && protectedRoutes.includes(to.path)) return navigateTo('/login')
   if (user.value && guestRoutes.includes(to.path)) return navigateTo('/home')
 })
