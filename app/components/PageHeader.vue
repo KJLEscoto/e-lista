@@ -10,7 +10,7 @@ const route = useRoute()
 
 <template>
   <div class="space-y-1">
-    <div class="flex items-center md:text-3xl text-2xl font-semibold">
+    <div class="flex items-center md:text-2xl text-xl font-semibold">
       <h1 class="text-nowrap truncate">{{ title }}</h1>
       <span v-if="route.path === '/home'">!</span>
     </div>
