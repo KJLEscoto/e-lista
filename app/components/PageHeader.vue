@@ -12,7 +12,7 @@ const route = useRoute()
   <div class="space-y-1">
     <div class="flex items-center md:text-2xl text-xl font-semibold">
       <h1 class="text-nowrap truncate">{{ title }}</h1>
-      <span v-if="route.path === '/home'">!</span>
+      <!-- <span v-if="route.path === '/home'">!</span> -->
     </div>
     <p v-if="description" class="text-black/60 md:text-base text-sm">{{ description }}</p>
   </div>

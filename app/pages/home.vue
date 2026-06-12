@@ -4,6 +4,9 @@ import { ChevronRight } from '@lucide/vue';
 
 definePageMeta({ layout: 'auth' })
 
+const { setHeader } = usePageHeader()
+setHeader('Home', '')
+
 
 const toCollect = ref(2345.30);
 const activeDebtors = ref(5);
@@ -41,7 +44,7 @@ const activeDebtors = ref(5);
     <!-- low on stock -->
     <section class="space-y-3">
       <div class="w-full justify-between flex items-center">
-        <h1 class="text-black/80">Low on Stock</h1>
+        <h1 class="text-black/80">Inventory Stock</h1>
         <NuxtLink to="/inventory"
           class="text-sm flex gap-1 items-center text-muted hover:text-primary transition-colors">
           All Inventory
