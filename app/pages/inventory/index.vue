@@ -7,8 +7,15 @@ definePageMeta({ layout: 'auth' })
 const { setHeader } = usePageHeader()
 setHeader('Inventory', 'Manage your products')
 
+// sample data
 const sampleCategories = ['All Items', 'Beverages', 'Snacks', 'Dairy', 'Produce', 'Meat']
 const activeCategory = ref('All Items')
+const products = [
+  { id: 1, uid: 'sdafasdfasdgfds', name: 'Coca-Cola', category: 'Beverages', price: 1.99, stock: 100, image: '/images/product_placeholder.png' },
+  { id: 2, uid: 'asdgfgsdfg', name: 'Lays Chips', category: 'Snacks', price: 2.49, stock: 9, image: '/images/product_placeholder.png' },
+  { id: 3, uid: 'dfgdfgdfg', name: 'Milk', category: 'Dairy', price: 0.99, stock: 200, image: '/images/product_placeholder.png' },
+]
+
 
 // Drag-to-scroll
 const scrollRef = ref<HTMLElement | null>(null)
@@ -36,13 +43,14 @@ function stopDrag() {
 
 // Touch support
 function onTouchStart(e: TouchEvent) {
-  startX.value = e.touches[0].pageX - (scrollRef.value?.offsetLeft ?? 0)
-  scrollLeft.value = scrollRef.value?.scrollLeft ?? 0
+  if (!e.touches[0] || !scrollRef.value) return
+  startX.value = e.touches[0].pageX - scrollRef.value.offsetLeft
+  scrollLeft.value = scrollRef.value.scrollLeft
 }
 
 function onTouchMove(e: TouchEvent) {
-  if (!scrollRef.value) return
-  const x = e.touches[0].pageX - (scrollRef.value.offsetLeft ?? 0)
+  if (!e.touches[0] || !scrollRef.value) return
+  const x = e.touches[0].pageX - scrollRef.value.offsetLeft
   scrollRef.value.scrollLeft = scrollLeft.value - (x - startX.value)
 }
 </script>
@@ -63,7 +71,7 @@ function onTouchMove(e: TouchEvent) {
         :class="isDragging ? 'select-none' : ''" @mousedown="onMouseDown" @mousemove="onMouseMove" @mouseup="stopDrag"
         @mouseleave="stopDrag" @touchstart="onTouchStart" @touchmove="onTouchMove">
         <button v-for="category in sampleCategories" :key="category"
-          class="flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-150 active:scale-95"
+          class="shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-150 active:scale-95"
           :class="activeCategory === category
             ? 'bg-primary text-white shadow-sm'
             : 'bg-white text-muted hover:bg-primary/10 hover:text-primary'" @click="activeCategory = category">
@@ -74,9 +82,34 @@ function onTouchMove(e: TouchEvent) {
 
     <!-- products -->
     <section class="space-y-3">
-      <div class="p-4 rounded-2xl h-20 w-full bg-white"></div>
-      <div class="p-4 rounded-2xl h-20 w-full bg-white"></div>
-      <div class="p-4 rounded-2xl h-20 w-full bg-white"></div>
+      <!-- card -->
+      <NuxtLink :to="`/inventory/${product.uid}`" v-for="product in products" :key="product.uid"
+        class="px-4 py-3 rounded-2xl w-full bg-white flex items-center gap-3">
+
+        <Image :src='product.image' :alt='product.name' class="size-12 rounded-lg object-cover shrink-0" />
+
+        <!-- middle: takes all remaining space, must have min-w-0 -->
+        <div class="flex items-center justify-between gap-10 w-full min-w-0">
+
+          <section class="space-y-1 min-w-0">
+            <h3 class="text-sm text-black/80 font-semibold truncate">{{ product.name }}</h3>
+            <div class="flex items-center gap-1.5">
+              <p class="text-xs text-muted">{{ product.category }}</p>
+              <div class="size-1 rounded-full bg-muted/30 shrink-0" />
+              <p :class="['text-xs', product.stock < 10 ? 'text-danger' : 'text-success']">
+                {{ product.stock }} stocks
+              </p>
+            </div>
+          </section>
+
+          <!-- right: never shrinks -->
+          <section class="flex items-center gap-1.5 shrink-0">
+            <h1 class="text-sm font-semibold text-primary text-nowrap">₱ {{ product.price.toFixed(2) }}</h1>
+            <ChevronRight class="size-4 text-muted/50" />
+          </section>
+
+        </div>
+      </NuxtLink>
     </section>
   </main>
 </template>

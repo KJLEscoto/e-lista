@@ -8,6 +8,7 @@
   --color-muted: #a9a9a9;
   --color-foreground: #f9f9f9;
   --color-danger: #ff0000;
+  --color-success: #00ca60;
 }
 
 @layer base {
