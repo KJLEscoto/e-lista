@@ -7,6 +7,9 @@ definePageMeta({ layout: 'auth' })
 const { setHeader } = usePageHeader()
 setHeader('Home', '')
 
+const { setLayout } = useAuthLayout()
+setLayout(true, true)
+
 
 const toCollect = ref(2345.30);
 const activeDebtors = ref(5);

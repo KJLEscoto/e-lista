@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import { Home, Plus, Archive, UsersRound, ClipboardCopy } from '@lucide/vue'
+import { Home, Plus, UsersRound, ClipboardCopy, Package } from '@lucide/vue'
 
 const navItems = [
   { to: '/home', icon: Home, label: 'Home' },
-  { to: '/inventory', icon: Archive, label: 'Inventory' },
+  { to: '/inventory', icon: Package, label: 'Inventory' },
   { to: '/debtors', icon: UsersRound, label: 'Debtors' },
   { to: '/history', icon: ClipboardCopy, label: 'History' },
+]
+
+const route = useRoute()
+console.log(route.path)
+const routeWithButton = [
+  '/inventory',
+  '/debtors',
 ]
 
 const modalAddRef = ref()
@@ -44,7 +51,8 @@ onBeforeUnmount(() => {
     <div class="w-full max-w-md mx-auto px-4 flex flex-col items-end"
       :style="{ paddingBottom: 'max(env(safe-area-inset-bottom), 14px)' }">
       <!-- FAB: part of the same transform container, aligned right -->
-      <button @click="addHabit"
+
+      <button v-if="routeWithButton.includes(route.path)" @click="addHabit"
         class="mb-3 mr-1 flex items-center justify-center size-16 rounded-3xl shadow-md shadow-black/30 bg-primary active:scale-95 transition-all duration-150 ease-in-out cursor-pointer">
         <Plus class="size-6 text-white pointer-events-none shrink-0" />
       </button>
@@ -61,5 +69,5 @@ onBeforeUnmount(() => {
     </div>
   </div>
 
-  <ModalAdd ref="modalAddRef" />
+  <ModalAdd v-if="route.path === '/debtors'" ref="modalAddRef" />
 </template>
