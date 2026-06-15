@@ -1,6 +1,6 @@
 <!-- components/Product/PurchasedLog.vue -->
 <script setup lang="ts">
-import { ChevronDown, ChevronRight } from '@lucide/vue'
+import { Banknote, ChevronDown, ChevronRight, QrCode } from '@lucide/vue'
 
 type PaymentMethod = 'CASH' | 'GCASH'
 
@@ -73,26 +73,30 @@ const methodColors: Record<PaymentMethod, string> = {
           <div v-for="entry in group.entries" :key="entry.id"
             class="relative flex items-center gap-3 bg-white rounded-2xl px-4 py-3">
             <!-- timeline dot -->
-            <div class="absolute -left-[1.3rem] size-2 rounded-full bg-muted ring-2 ring-zinc-100" />
+            <div class="absolute -left-[1.3rem] size-2 rounded-full bg-primary ring-2 ring-zinc-100" />
 
             <!-- payment method badge -->
-            <span class="text-xs font-bold px-2.5 py-1.5 rounded-xl shrink-0 tracking-wide"
-              :class="methodColors[entry.paymentMethod]">
-              {{ entry.paymentMethod }}
-            </span>
+            <Tooltip :text="entry.paymentMethod === 'CASH' ? 'Cash' : 'GCash'" placement="top">
+              <div class="text-xs font-bold p-3 rounded-lg shrink-0 tracking-wide"
+                :class="methodColors[entry.paymentMethod]">
+                <Banknote v-if="entry.paymentMethod === 'CASH'" class="size-5 pointer-events-none" />
+                <QrCode v-if="entry.paymentMethod === 'GCASH'" class="size-5 pointer-events-none" />
+              </div>
+            </Tooltip>
 
             <!-- info -->
             <div class="flex items-center justify-between w-full min-w-0 gap-2">
-              <section class="min-w-0 space-y-0.5">
+              <section class="min-w-0 space-y-2">
                 <p class="text-sm font-semibold text-black/80 truncate">{{ entry.debtorName }}</p>
                 <p class="text-xs text-muted">
                   ₱{{ entry.pricePerUnit.toFixed(2) }} × {{ entry.qty }} qty
                 </p>
               </section>
 
-              <section class="shrink-0 text-right space-y-0.5">
+              <section class="shrink-0 text-right space-y-2">
                 <p class="text-sm font-bold text-primary text-nowrap">₱{{ entry.total.toLocaleString('en-PH', {
-                  minimumFractionDigits: 2 }) }}</p>
+                  minimumFractionDigits: 2
+                }) }}</p>
                 <p class="text-xs text-muted">{{ entry.time }}</p>
               </section>
             </div>

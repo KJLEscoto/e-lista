@@ -160,7 +160,7 @@ onUnmounted(() => {
       leave-active-class="transition-opacity duration-100" leave-to-class="opacity-0">
       <div v-if="isVisible" ref="tooltipRef" :style="tooltipStyles"
         class="drop-shadow-xl fixed z-9999 pointer-events-none text-center">
-        <div class="bg-white text-muted text-xs font-medium border-muted/10 border px-2.5 py-1.5 rounded-lg text-nowrap">
+        <div class="bg-white text-black text-xs font-medium border-muted/10 border px-2.5 py-1.5 rounded-lg text-nowrap">
           {{ text }}
         </div>
         <!-- <div :class="['absolute border-4', arrowClasses]" /> -->
