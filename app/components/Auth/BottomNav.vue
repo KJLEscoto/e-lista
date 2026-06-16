@@ -1,3 +1,4 @@
+<!-- components/Auth/BottomNav.vue -->
 <script setup lang="ts">
 import { Home, Plus, UsersRound, ClipboardCopy, Package } from '@lucide/vue'
 
@@ -9,17 +10,12 @@ const navItems = [
 ]
 
 const route = useRoute()
-console.log(route.path)
-const routeWithButton = [
-  '/inventory',
-  '/debtors',
-]
 
-const modalAddRef = ref()
+const routesWithButton = ['/inventory', '/debtors']
+const showFab = computed(() => routesWithButton.includes(route.path))
 
-const addHabit = () => {
-  modalAddRef.value?.addHabit()
-}
+// shared modal state via composable — pages can also read this
+const showAddModal = useState('addModal.open', () => false)
 
 const isNavVisible = ref(true)
 const lastScrollY = ref(0)
@@ -50,12 +46,14 @@ onBeforeUnmount(() => {
     :class="isNavVisible ? 'translate-y-0' : 'translate-y-[130%]'">
     <div class="w-full max-w-md mx-auto px-4 flex flex-col items-end"
       :style="{ paddingBottom: 'max(env(safe-area-inset-bottom), 14px)' }">
-      <!-- FAB: part of the same transform container, aligned right -->
-
-      <button v-if="routeWithButton.includes(route.path)" @click="addHabit"
-        class="mb-3 mr-1 flex items-center justify-center size-16 rounded-3xl shadow-md shadow-black/30 bg-primary active:scale-95 transition-all duration-150 ease-in-out cursor-pointer">
-        <Plus class="size-6 text-white pointer-events-none shrink-0" />
-      </button>
+      <!-- FAB -->
+      <Transition enter-active-class="transition duration-200 ease-out" enter-from-class="opacity-0 scale-75"
+        leave-active-class="transition duration-150 ease-in" leave-to-class="opacity-0 scale-75">
+        <button v-if="showFab" @click="showAddModal = true"
+          class="mb-3 mr-1 flex items-center justify-center size-16 rounded-3xl shadow-md shadow-black/30 bg-primary active:scale-95 transition-all duration-150 ease-in-out cursor-pointer">
+          <Plus class="size-6 text-white pointer-events-none shrink-0" />
+        </button>
+      </Transition>
 
       <!-- Nav bar -->
       <nav class="bg-white w-full rounded-3xl p-2 flex items-center justify-around shadow-lg">
@@ -68,6 +66,4 @@ onBeforeUnmount(() => {
       </nav>
     </div>
   </div>
-
-  <ModalAdd v-if="route.path === '/debtors'" ref="modalAddRef" />
 </template>
