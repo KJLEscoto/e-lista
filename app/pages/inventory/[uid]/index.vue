@@ -65,7 +65,7 @@ const handleDelete = () => { showDeleteConfirm.value = true }
     <div class="space-y-5">
 
       <!-- Hero image -->
-      <div class="relative w-full h-56 bg-zinc-200 overflow-hidden">
+      <div class="relative w-full h-56 bg-zinc-200 overflow-hidden rounded-2xl">
         <Image :src="product.image" :alt="product.name" class="w-full h-full object-cover" />
       </div>
 
