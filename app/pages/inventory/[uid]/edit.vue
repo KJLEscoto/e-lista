@@ -11,6 +11,9 @@ const route = useRoute()
 
 const uid = computed(() => route.params.uid as string)
 
+const sampleCategories = ['Beverages', 'Snacks', 'Dairy', 'Produce', 'Meat']
+const activeCategory = ref('')
+
 const product = ref({
   uid: uid.value,
   name: 'Premium Arabica Beans',
@@ -41,9 +44,9 @@ const handleImageChange = (event: Event) => {
 </script>
 
 <template>
-  <div class="w-full">
+  <div class="w-full pb-10">
     <!-- Top actions bar -->
-    <div class="sticky top-0 z-10 w-full bg-foreground/90 backdrop-blur-sm px-1 py-4">
+    <div class="sticky top-0 z-10 p-4 w-full bg-foreground">
       <NuxtLink :to="`/inventory/${product.uid}`"
         class="flex size-10 items-center justify-center rounded-full bg-primary text-white shadow active:scale-95 transition-all duration-150">
         <ArrowLeft class="size-4 pointer-events-none" />
@@ -51,15 +54,13 @@ const handleImageChange = (event: Event) => {
     </div>
 
     <!-- Content -->
-    <div class="space-y-5">
+    <div class="space-y-5 p-4">
       <!-- Hero image -->
       <label
         class="group relative block h-56 w-full cursor-pointer overflow-hidden rounded-2xl border border-dashed border-primary">
-        <Image :src="product.image" :alt="product.name"
-          class="h-full w-full object-cover" />
+        <Image :src="product.image" :alt="product.name" class="h-full w-full object-cover" />
 
-        <div
-          class="absolute inset-0 flex items-center justify-center bg-black/10">
+        <div class="absolute inset-0 flex items-center justify-center bg-black/10">
           <span class="rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-zinc-900 shadow">
             Tap to change image
           </span>
@@ -68,76 +69,37 @@ const handleImageChange = (event: Event) => {
         <input type="file" accept="image/*" class="sr-only" @change="handleImageChange" />
       </label>
 
-      <!-- Name + price -->
+
+      <UIInput v-model="product.name" label="Product Name" type="text" placeholder="Enter product name" required />
+
       <section class="space-y-2">
-        <p class="w-fit rounded-full bg-primary/10 px-3 py-1 text-sm text-primary">
-          {{ product.category }}
+        <p class="text-sm text-muted">Category
+          <span class="text-sm leading-none text-primary">*</span>
         </p>
-
-        <h1 class="text-xl text-black/90">
-          {{ product.name }}
-        </h1>
-
-        <p class="text-2xl font-bold text-primary">
-          ₱ {{ product.sellingPrice.toFixed(2) }}
-        </p>
+        <div class="flex flex-wrap items-center gap-2">
+          <button v-for="category in sampleCategories" :key="category"
+            class="shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-150 active:scale-95"
+            :class="activeCategory === category
+              ? 'bg-primary text-white shadow-sm'
+              : 'bg-white text-muted hover:bg-primary/10 hover:text-primary'" @click="activeCategory = category">
+            {{ category }}
+          </button>
+        </div>
       </section>
 
-      <section class="space-y-3">
-        <!-- Stock + SRP -->
-        <section class="grid grid-cols-2 gap-3">
-          <div class="space-y-2 rounded-2xl bg-white p-4">
-            <p class="text-xs font-medium uppercase tracking-wide text-muted">
-              Stock
-            </p>
+      <UIInput v-model="product.stock" label="Stock" type="number" placeholder="Enter stock quantity" required />
 
-            <div class="flex items-center gap-2">
-              <BoxIcon class="size-5 shrink-0 text-muted" />
-              <p class="text-base font-bold text-black/90">
-                {{ product.stock.toLocaleString() }} qty
-              </p>
-            </div>
-          </div>
+      <UIInput v-model="product.srp" label="SRP" type="number" placeholder="Enter selling price" required />
 
-          <div class="space-y-2 rounded-2xl bg-white p-4">
-            <p class="text-xs font-medium uppercase tracking-wide text-muted">
-              SRP
-            </p>
+      <UIInput v-model="product.sellingPrice" label="Selling Price" type="number" placeholder="Enter selling price"
+        required />
 
-            <div class="flex items-center gap-2">
-              <span class="text-lg font-light text-muted">₱</span>
-              <p class="text-base font-bold text-black/90">
-                {{ product.srp.toFixed(2) }}
-              </p>
-            </div>
-          </div>
-        </section>
+    </div>
 
-        <!-- Dates -->
-        <section class="grid grid-cols-2 gap-3">
-          <div class="space-y-2 rounded-2xl bg-white p-4">
-            <p class="text-xs font-medium uppercase tracking-wide text-muted">
-              Created At
-            </p>
-
-            <p class="text-base font-bold text-black/90">
-              {{ product.createdAt }}
-            </p>
-          </div>
-
-          <div class="space-y-2 rounded-2xl bg-white p-4">
-            <p class="text-xs font-medium uppercase tracking-wide text-muted">
-              Last Update
-            </p>
-
-            <p class="text-base font-bold text-black/90">
-              {{ product.lastUpdate }}
-            </p>
-          </div>
-        </section>
-      </section>
-
-      <AuthInventoryPurchasedLog />
+    <div class="fixed w-full bottom-0 p-4 bg-foreground">
+      <UIButton class="w-full" type="button">
+        Update
+      </UIButton>
     </div>
   </div>
 </template>

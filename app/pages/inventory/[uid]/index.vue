@@ -36,7 +36,7 @@ const handleDelete = () => { showDeleteConfirm.value = true }
   <div class="w-full">
 
     <!-- Top actions bar -->
-    <div class="w-full flex items-center justify-between sticky top-0 bg-foreground backdrop-blur-sm z-10 px-1 py-4">
+    <div class="w-full flex items-center justify-between sticky top-0 bg-foreground z-10 p-4">
       <!-- Back -->
       <NuxtLink to="/inventory"
         class="w-auto h-auto p-3 flex items-center justify-center rounded-full bg-primary text-white shadow active:scale-95 transition-all duration-150 cursor-pointer">
@@ -62,7 +62,7 @@ const handleDelete = () => { showDeleteConfirm.value = true }
 
 
     <!-- Content -->
-    <div class="space-y-5">
+    <div class="space-y-5 p-4">
 
       <!-- Hero image -->
       <div class="relative w-full h-56 bg-zinc-200 overflow-hidden rounded-2xl">
