@@ -1,4 +1,4 @@
-<!-- pages/inventory/[uid].vue -->
+<!-- pages/inventory/[uid]/edit.vue -->
 <script setup lang="ts">
 import { ArrowLeft, BoxIcon } from '@lucide/vue'
 
@@ -6,6 +6,11 @@ definePageMeta({ layout: 'auth' })
 
 const { setLayout } = useAuthLayout()
 setLayout(false, false)
+
+const handleUpdate = () => {
+  // TODO: wire to your actual update logic (Firestore write, store action, etc.)
+  console.log('Update product', product.value)
+}
 
 const route = useRoute()
 
@@ -89,17 +94,19 @@ const handleImageChange = (event: Event) => {
 
       <UIInput v-model="product.stock" label="Stock" type="number" placeholder="Enter stock quantity" required />
 
-      <UIInput v-model="product.srp" label="SRP" type="number" placeholder="Enter selling price" required />
+      <UIInput v-model="product.srp" label="Market Price" type="number" placeholder="Enter selling price" required />
 
       <UIInput v-model="product.sellingPrice" label="Selling Price" type="number" placeholder="Enter selling price"
         required />
 
     </div>
 
-    <div class="fixed w-full bottom-0 p-4 bg-foreground">
-      <UIButton class="w-full" type="button">
-        Update
-      </UIButton>
+    <div class="fixed inset-x-0 bottom-0 z-10 bg-foreground">
+      <div class="max-w-md mx-auto p-4">
+        <UIButton class="w-full" type="button" @click="handleUpdate">
+          Update
+        </UIButton>
+      </div>
     </div>
   </div>
 </template>

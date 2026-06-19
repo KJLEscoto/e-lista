@@ -36,7 +36,7 @@ const handleDelete = () => { showDeleteConfirm.value = true }
   <div class="w-full">
 
     <!-- Top actions bar -->
-    <div class="w-full flex items-center justify-between sticky top-0 bg-foreground z-10 p-4">
+    <div class="w-full flex items-center justify-between sticky top-0 bg-foreground z-20 p-4">
       <!-- Back -->
       <NuxtLink to="/inventory"
         class="w-auto h-auto p-3 flex items-center justify-center rounded-full bg-primary text-white shadow active:scale-95 transition-all duration-150 cursor-pointer">
@@ -83,10 +83,7 @@ const handleDelete = () => { showDeleteConfirm.value = true }
         <section class="grid grid-cols-2 gap-3">
           <div class="bg-white rounded-2xl p-4 space-y-2">
             <p class="text-xs text-muted uppercase tracking-wide font-medium">Stock</p>
-            <div class="flex items-center gap-2">
-              <BoxIcon class="size-5 text-muted shrink-0" />
-              <p class="text-base font-bold text-black/90">{{ product.stock.toLocaleString() }} qty</p>
-            </div>
+            <p class="text-base font-bold text-black/90">{{ product.stock.toLocaleString() }} qty</p>
           </div>
           <div class="bg-white rounded-2xl p-4 space-y-2">
             <p class="text-xs text-muted uppercase tracking-wide font-medium">SRP</p>
