@@ -9,12 +9,14 @@ setHeader('Debtors', 'Manage your debtors')
 const { setLayout } = useAuthLayout()
 setLayout(true, true)
 
-const toCollect = ref(2345.30);
 const debtors = ref([
   { uid: 'asdfnjdsks', name: 'John Doe', remaining_balance: 200.00, target_amount: 700.00 },
   { uid: 'qwerpoiu', name: 'Jane Smith', remaining_balance: 0.00, target_amount: 300.00 },
   { uid: 'zxcvbnml', name: 'Michael Johnson', remaining_balance: 150.00, target_amount: 170.00 },
 ]);
+const toCollect = ref(
+  debtors.value.reduce((total, debtor) => total + debtor.remaining_balance, 0)
+);
 const openDebtors = computed(() => debtors.value.filter(debtor => debtor.remaining_balance > 0).length);
 const closedDebtors = computed(() => debtors.value.filter(debtor => debtor.remaining_balance === 0).length);
 
@@ -58,7 +60,7 @@ function getInitials(name: string) {
     </section>
 
     <section class="grid grid-cols-2 gap-3">
-      <div v-for="debtor in debtors" :key="debtor.uid"
+      <NuxtLink :to="`/debtors/${debtor.uid}`" v-for="debtor in debtors" :key="debtor.uid"
         class="bg-white rounded-2xl p-4 flex flex-col items-center justify-center gap-3">
         <div
           class="text-base font-bold bg-primary/10 text-primary size-16 flex items-center justify-center rounded-full shrink-0">
@@ -76,7 +78,7 @@ function getInitials(name: string) {
           }">
           </div>
         </div>
-      </div>
+      </NuxtLink>
     </section>
   </main>
 </template>
