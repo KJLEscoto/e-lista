@@ -46,15 +46,15 @@ function getInitials(name: string) {
 
     <section class="grid grid-cols-3 gap-3">
       <div class="bg-white rounded-2xl p-4 space-y-2">
-        <p class="text-sm text-muted tracking-wide font-medium">To Collect</p>
+        <p class="text-sm text-muted font-medium">To Collect</p>
         <p class="text-base font-bold text-black/90"><span class="text-muted">₱</span> {{ toCollect.toFixed(2) }}</p>
       </div>
       <div class="bg-white rounded-2xl p-4 space-y-2">
-        <p class="text-sm text-muted tracking-wide font-medium">Open</p>
+        <p class="text-sm text-muted font-medium">Open</p>
         <p class="text-base font-bold text-black/90">{{ openDebtors }}</p>
       </div>
       <div class="bg-white rounded-2xl p-4 space-y-2">
-        <p class="text-sm text-muted tracking-wide font-medium">Closed</p>
+        <p class="text-sm text-muted font-medium">Closed</p>
         <p class="text-base font-bold text-black/90">{{ closedDebtors }}</p>
       </div>
     </section>
