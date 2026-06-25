@@ -1,6 +1,6 @@
 <!-- pages/inventory/[uid].vue -->
 <script setup lang="ts">
-import { ArrowLeft, Pencil, Archive, Trash2, BoxIcon, ChevronDown } from '@lucide/vue'
+import { ArrowLeft, Pencil, Archive, Trash2, BoxIcon, ChevronDown, Eye } from '@lucide/vue'
 
 definePageMeta({ layout: 'auth' })
 
@@ -115,7 +115,8 @@ const handleDelete = () => { showDeleteConfirm.value = true }
             </div>
           </div>
 
-          <p class="text-sm font-bold w-full text-end"><span class="text-muted font-normal">Total: ₱</span> {{ debtor.target_amount.toFixed(2) }}</p>
+          <p class="text-sm font-bold w-full text-end"><span class="text-muted font-normal">Total: ₱</span> {{
+            debtor.target_amount.toFixed(2) }}</p>
         </section>
       </div>
 
@@ -135,6 +136,46 @@ const handleDelete = () => { showDeleteConfirm.value = true }
       <UIButton class="w-full text-sm" type="button">
         Log Collection
       </UIButton>
+
+    </div>
+
+    <div class="p-4 space-y-3 w-full">
+      <h1 class="text-black/80">Recent Activities</h1>
+
+      <div class="grid grid-cols-2 gap-4">
+        <section class="bg-white rounded-2xl p-4 space-y-4">
+          <div class="flex items-center justify-between gap-4">
+            <p class="text-sm text-muted font-medium">Purchased</p>
+            <Eye class="size-4 text-muted pointer-events-none" />
+          </div>
+
+          <div class="space-y-1">
+            <h1 class="text-black/80 font-bold">3 items</h1>
+            <p class="text-xs text-muted font-medium">Total of <span class="text-muted font-normal">₱</span> 156.00</p>
+          </div>
+
+          <UIButton class="w-full text-sm rounded-xl" variant="secondary" type="button">
+            Log Purchase
+          </UIButton>
+        </section>
+
+        <section class="bg-white rounded-2xl p-4 space-y-4">
+          <div class="flex items-center justify-between gap-4">
+            <p class="text-sm text-muted font-medium">Borrowed</p>
+            <Eye class="size-4 text-muted pointer-events-none" />
+          </div>
+
+          <div class="space-y-1">
+            <h1 class="text-black/80 font-bold"><span class="text-muted font-normal">₱</span> 44.00</h1>
+            <p class="text-xs text-muted font-medium">Apr 4, 2026</p>
+          </div>
+
+          <UIButton class="w-full text-sm rounded-xl" variant="secondary" type="button">
+            Log Borrow
+          </UIButton>
+
+        </section>
+      </div>
     </div>
 
   </div>
