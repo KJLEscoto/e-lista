@@ -1,6 +1,7 @@
 <!-- pages/inventory/[uid].vue -->
 <script setup lang="ts">
 import { ArrowLeft, Pencil, Archive, Trash2, BoxIcon, ChevronDown, Eye } from '@lucide/vue'
+import CollectionLog from '~/components/Auth/Debtors/CollectionLog.vue'
 
 definePageMeta({ layout: 'auth' })
 
@@ -176,6 +177,10 @@ const handleDelete = () => { showDeleteConfirm.value = true }
 
         </section>
       </div>
+    </div>
+
+    <div class="p-4 space-y-3 w-full">
+      <CollectionLog />
     </div>
 
   </div>

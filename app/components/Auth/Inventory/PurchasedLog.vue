@@ -1,6 +1,6 @@
 <!-- components/Product/PurchasedLog.vue -->
 <script setup lang="ts">
-import { Banknote, ChevronDown, ChevronRight, QrCode } from '@lucide/vue'
+import { Banknote, ChevronDown, QrCode } from '@lucide/vue'
 
 type PaymentMethod = 'CASH' | 'GCASH'
 
@@ -89,7 +89,7 @@ const methodColors: Record<PaymentMethod, string> = {
 
 <template>
   <section>
-    <h2 class="font-semibold text-black/80 sticky top-16 py-2 bg-foreground z-20">Purchased Log</h2>
+    <h2 class=" text-black/80 sticky top-16 py-2 bg-foreground z-20">Purchased Log</h2>
 
     <!-- grouped by date -->
     <div class="space-y-3">
@@ -98,7 +98,7 @@ const methodColors: Record<PaymentMethod, string> = {
         <!-- date header / toggle -->
         <button @click="toggle(group.date)"
           class="w-full flex items-center justify-between py-2 cursor-pointer group sticky top-25 z-10 bg-foreground">
-          <p class="text-xs font-semibold text-muted uppercase tracking-wider">{{ group.date }}</p>
+          <p class="text-xs text-black uppercase tracking-wider">{{ group.date }}</p>
           <ChevronDown class="size-4 text-muted transition-transform duration-200 pointer-events-none"
             :class="expanded[group.date] ? 'rotate-0' : '-rotate-90'" />
         </button>
