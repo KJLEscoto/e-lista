@@ -1,6 +1,6 @@
 <!-- pages/inventory/[uid].vue -->
 <script setup lang="ts">
-import { ArrowLeft, Pencil, Archive, Trash2, BoxIcon, ChevronDown, Eye } from '@lucide/vue'
+import { ArrowLeft, Pencil, Archive, Trash2, BoxIcon, ChevronDown, Eye, SquarePen } from '@lucide/vue'
 import CollectionLog from '~/components/Auth/Debtors/CollectionLog.vue'
 
 definePageMeta({ layout: 'auth' })
@@ -104,7 +104,7 @@ const handleDelete = () => { showDeleteConfirm.value = true }
               <span class="text-muted font-normal">₱</span> {{ debtor.remaining_balance.toFixed(2) }}
             </h2>
           </div>
-          <Pencil class="size-4 text-muted pointer-events-none" />
+          <SquarePen class="size-4 text-muted pointer-events-none" />
         </section>
 
         <section class="w-full space-y-2">

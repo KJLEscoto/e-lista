@@ -40,6 +40,20 @@ const logs: LogGroup[] = [
       { id: '2', paymentMethod: 'GCASH', type: 'Full Payment', amount: 100.00, time: '12:23 PM' },
     ],
   },
+  {
+    date: 'Apr 1, 2026',
+    entries: [
+      { id: '1', paymentMethod: 'CASH', type: 'Partial Payment', amount: 32.50, time: '9:23 PM' },
+      { id: '2', paymentMethod: 'GCASH', type: 'Full Payment', amount: 100.00, time: '12:23 PM' },
+    ],
+  },
+  {
+    date: 'Apr 1, 2026',
+    entries: [
+      { id: '1', paymentMethod: 'CASH', type: 'Partial Payment', amount: 32.50, time: '9:23 PM' },
+      { id: '2', paymentMethod: 'GCASH', type: 'Full Payment', amount: 100.00, time: '12:23 PM' },
+    ],
+  },
 ]
 
 // track which groups are expanded (all open by default)
