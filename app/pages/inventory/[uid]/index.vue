@@ -1,6 +1,8 @@
 <!-- pages/inventory/[uid].vue -->
 <script setup lang="ts">
 import { ArrowLeft, Pencil, Archive, Trash2, BoxIcon, ChevronDown } from '@lucide/vue'
+import PurchasedLog from '~/components/Auth/Inventory/PurchasedLog.vue'
+import type { PurchasedLogGroup } from '~/types/purchased'
 
 definePageMeta({ layout: 'auth' })
 
@@ -24,6 +26,58 @@ const product = ref({
   createdAt: 'Jan 12, 2026',
   lastUpdate: 'Mar 28, 2026',
 })
+
+// sample data
+const logs: PurchasedLogGroup[] = [
+  {
+    date: 'Apr 4, 2026',
+    entries: [
+      { id: '1', paymentMethod: 'CASH', debtorName: 'Café Marron', pricePerUnit: 32.50, qty: 20, total: 650.00, time: '9:23 PM', type: 'PURCHASE' },
+      { id: '2', paymentMethod: 'GCASH', debtorName: 'Beanery Co.', pricePerUnit: 32.50, qty: 50, total: 1625.00, time: '8:45 PM', type: 'BORROW' },
+    ]
+  },
+  {
+    date: 'Apr 4, 2026',
+    entries: [
+      { id: '1', paymentMethod: 'CASH', debtorName: 'Café Marron', pricePerUnit: 32.50, qty: 20, total: 650.00, time: '9:23 PM', type: 'PURCHASE' },
+      { id: '2', paymentMethod: 'GCASH', debtorName: 'Beanery Co.', pricePerUnit: 32.50, qty: 50, total: 1625.00, time: '8:45 PM', type: 'BORROW' },
+    ]
+  },
+  {
+    date: 'Apr 4, 2026',
+    entries: [
+      { id: '1', paymentMethod: 'CASH', debtorName: 'Café Marron', pricePerUnit: 32.50, qty: 20, total: 650.00, time: '9:23 PM', type: 'PURCHASE' },
+      { id: '2', paymentMethod: 'GCASH', debtorName: 'Beanery Co.', pricePerUnit: 32.50, qty: 50, total: 1625.00, time: '8:45 PM', type: 'BORROW' },
+    ]
+  },
+  {
+    date: 'Apr 4, 2026',
+    entries: [
+      { id: '1', paymentMethod: 'CASH', debtorName: 'Café Marron', pricePerUnit: 32.50, qty: 20, total: 650.00, time: '9:23 PM', type: 'PURCHASE' },
+      { id: '2', paymentMethod: 'GCASH', debtorName: 'Beanery Co.', pricePerUnit: 32.50, qty: 50, total: 1625.00, time: '8:45 PM', type: 'BORROW' },
+    ]
+  },
+  {
+    date: 'Apr 4, 2026',
+    entries: [
+      { id: '1', paymentMethod: 'CASH', debtorName: 'Café Marron', pricePerUnit: 32.50, qty: 20, total: 650.00, time: '9:23 PM', type: 'PURCHASE' },
+      { id: '2', paymentMethod: 'GCASH', debtorName: 'Beanery Co.', pricePerUnit: 32.50, qty: 50, total: 1625.00, time: '8:45 PM', type: 'BORROW' },
+    ]
+  },
+  {
+    date: 'Apr 4, 2026',
+    entries: [
+      { id: '1', paymentMethod: 'CASH', debtorName: 'Café Marron', pricePerUnit: 32.50, qty: 20, total: 650.00, time: '9:23 PM', type: 'PURCHASE' },
+      { id: '2', paymentMethod: 'GCASH', debtorName: 'Beanery Co.', pricePerUnit: 32.50, qty: 50, total: 1625.00, time: '8:45 PM', type: 'BORROW' },
+    ]
+  },
+  {
+    date: 'Apr 1, 2026',
+    entries: [
+      { id: '3', paymentMethod: 'CASH', debtorName: 'Roast Masters', pricePerUnit: 32.50, qty: 100, total: 3250.00, time: '11:15 AM', type: 'PURCHASE' },
+    ]
+  },
+]
 
 const showDeleteConfirm = ref(false)
 
@@ -107,7 +161,7 @@ const handleDelete = () => { showDeleteConfirm.value = true }
         </section>
       </section>
 
-      <AuthInventoryPurchasedLog />
+      <PurchasedLog :data="logs" />
 
 
     </div>

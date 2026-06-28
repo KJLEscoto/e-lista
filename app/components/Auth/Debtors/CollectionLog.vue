@@ -1,64 +1,17 @@
-<!-- components/Product/PurchasedLog.vue -->
+<!-- components/Product/CollectionLog.vue -->
 <script setup lang="ts">
-import { Banknote, ChevronDown, ChevronRight, QrCode } from '@lucide/vue'
+import { Banknote, ChevronDown, QrCode } from '@lucide/vue'
+import type { CollectionLogGroup } from '~/types/collection';
+import type { PaymentMethod } from '~/types/payment_method';
 
-type PaymentMethod = 'CASH' | 'GCASH'
 
-interface LogEntry {
-  id: string
-  paymentMethod: PaymentMethod
-  amount: number
-  time: string
-  type: string
-}
-
-interface LogGroup {
-  date: string
-  entries: LogEntry[]
-}
-
-// sample data
-const logs: LogGroup[] = [
-  {
-    date: 'Apr 4, 2026',
-    entries: [
-      { id: '1', paymentMethod: 'CASH', type: 'Partial Payment', amount: 32.50, time: '9:23 PM' },
-      { id: '2', paymentMethod: 'GCASH', type: 'Full Payment', amount: 100.00, time: '12:23 PM' },
-    ],
-  },
-  {
-    date: 'Apr 3, 2026',
-    entries: [
-      { id: '1', paymentMethod: 'CASH', type: 'Partial Payment', amount: 32.50, time: '9:23 PM' },
-      { id: '2', paymentMethod: 'GCASH', type: 'Full Payment', amount: 100.00, time: '12:23 PM' },
-    ],
-  },
-  {
-    date: 'Apr 1, 2026',
-    entries: [
-      { id: '1', paymentMethod: 'CASH', type: 'Partial Payment', amount: 32.50, time: '9:23 PM' },
-      { id: '2', paymentMethod: 'GCASH', type: 'Full Payment', amount: 100.00, time: '12:23 PM' },
-    ],
-  },
-  {
-    date: 'Apr 1, 2026',
-    entries: [
-      { id: '1', paymentMethod: 'CASH', type: 'Partial Payment', amount: 32.50, time: '9:23 PM' },
-      { id: '2', paymentMethod: 'GCASH', type: 'Full Payment', amount: 100.00, time: '12:23 PM' },
-    ],
-  },
-  {
-    date: 'Apr 1, 2026',
-    entries: [
-      { id: '1', paymentMethod: 'CASH', type: 'Partial Payment', amount: 32.50, time: '9:23 PM' },
-      { id: '2', paymentMethod: 'GCASH', type: 'Full Payment', amount: 100.00, time: '12:23 PM' },
-    ],
-  },
-]
+const props = defineProps<{
+  data: CollectionLogGroup[]
+}>()
 
 // track which groups are expanded (all open by default)
 const expanded = ref<Record<string, boolean>>(
-  Object.fromEntries(logs.map(g => [g.date, true]))
+  Object.fromEntries(props.data.map(g => [g.date, true]))
 )
 
 const toggle = (date: string) => {
@@ -77,7 +30,7 @@ const methodColors: Record<PaymentMethod, string> = {
 
     <!-- grouped by date -->
     <div class="space-y-3">
-      <div v-for="group in logs" :key="group.date" class="space-y-1">
+      <div v-for="group in data" :key="group.date" class="space-y-1">
 
         <!-- date header / toggle -->
         <button @click="toggle(group.date)"

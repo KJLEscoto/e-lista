@@ -1,80 +1,16 @@
 <!-- components/Product/PurchasedLog.vue -->
 <script setup lang="ts">
 import { Banknote, ChevronDown, QrCode } from '@lucide/vue'
+import type { PaymentMethod } from '~/types/payment_method';
+import type { PurchasedLogGroup } from '~/types/purchased';
 
-type PaymentMethod = 'CASH' | 'GCASH'
-
-interface LogEntry {
-  id: string
-  paymentMethod: PaymentMethod
-  debtorName: string
-  pricePerUnit: number
-  qty: number
-  total: number
-  time: string
-  type: 'PURCHASE' | 'BORROW'
-}
-
-interface LogGroup {
-  date: string
-  entries: LogEntry[]
-}
-
-// sample data
-const logs: LogGroup[] = [
-  {
-    date: 'Apr 4, 2026',
-    entries: [
-      { id: '1', paymentMethod: 'CASH', debtorName: 'Café Marron', pricePerUnit: 32.50, qty: 20, total: 650.00, time: '9:23 PM', type: 'PURCHASE' },
-      { id: '2', paymentMethod: 'GCASH', debtorName: 'Beanery Co.', pricePerUnit: 32.50, qty: 50, total: 1625.00, time: '8:45 PM', type: 'BORROW' },
-    ]
-  },
-  {
-    date: 'Apr 4, 2026',
-    entries: [
-      { id: '1', paymentMethod: 'CASH', debtorName: 'Café Marron', pricePerUnit: 32.50, qty: 20, total: 650.00, time: '9:23 PM', type: 'PURCHASE' },
-      { id: '2', paymentMethod: 'GCASH', debtorName: 'Beanery Co.', pricePerUnit: 32.50, qty: 50, total: 1625.00, time: '8:45 PM', type: 'BORROW' },
-    ]
-  },
-  {
-    date: 'Apr 4, 2026',
-    entries: [
-      { id: '1', paymentMethod: 'CASH', debtorName: 'Café Marron', pricePerUnit: 32.50, qty: 20, total: 650.00, time: '9:23 PM', type: 'PURCHASE' },
-      { id: '2', paymentMethod: 'GCASH', debtorName: 'Beanery Co.', pricePerUnit: 32.50, qty: 50, total: 1625.00, time: '8:45 PM', type: 'BORROW' },
-    ]
-  },
-  {
-    date: 'Apr 4, 2026',
-    entries: [
-      { id: '1', paymentMethod: 'CASH', debtorName: 'Café Marron', pricePerUnit: 32.50, qty: 20, total: 650.00, time: '9:23 PM', type: 'PURCHASE' },
-      { id: '2', paymentMethod: 'GCASH', debtorName: 'Beanery Co.', pricePerUnit: 32.50, qty: 50, total: 1625.00, time: '8:45 PM', type: 'BORROW' },
-    ]
-  },
-  {
-    date: 'Apr 4, 2026',
-    entries: [
-      { id: '1', paymentMethod: 'CASH', debtorName: 'Café Marron', pricePerUnit: 32.50, qty: 20, total: 650.00, time: '9:23 PM', type: 'PURCHASE' },
-      { id: '2', paymentMethod: 'GCASH', debtorName: 'Beanery Co.', pricePerUnit: 32.50, qty: 50, total: 1625.00, time: '8:45 PM', type: 'BORROW' },
-    ]
-  },
-  {
-    date: 'Apr 4, 2026',
-    entries: [
-      { id: '1', paymentMethod: 'CASH', debtorName: 'Café Marron', pricePerUnit: 32.50, qty: 20, total: 650.00, time: '9:23 PM', type: 'PURCHASE' },
-      { id: '2', paymentMethod: 'GCASH', debtorName: 'Beanery Co.', pricePerUnit: 32.50, qty: 50, total: 1625.00, time: '8:45 PM', type: 'BORROW' },
-    ]
-  },
-  {
-    date: 'Apr 1, 2026',
-    entries: [
-      { id: '3', paymentMethod: 'CASH', debtorName: 'Roast Masters', pricePerUnit: 32.50, qty: 100, total: 3250.00, time: '11:15 AM', type: 'PURCHASE' },
-    ]
-  },
-]
+const props = defineProps<{
+  data: PurchasedLogGroup[]
+}>()
 
 // track which groups are expanded (all open by default)
 const expanded = ref<Record<string, boolean>>(
-  Object.fromEntries(logs.map(g => [g.date, true]))
+  Object.fromEntries(props.data.map(g => [g.date, true]))
 )
 
 const toggle = (date: string) => {
@@ -93,7 +29,7 @@ const methodColors: Record<PaymentMethod, string> = {
 
     <!-- grouped by date -->
     <div class="space-y-3">
-      <div v-for="group in logs" :key="group.date" class="space-y-1">
+      <div v-for="group in data" :key="group.date" class="space-y-1">
 
         <!-- date header / toggle -->
         <button @click="toggle(group.date)"
@@ -132,7 +68,7 @@ const methodColors: Record<PaymentMethod, string> = {
                 </section>
 
                 <section class="shrink-0 text-right space-y-2">
-                  <p class="text-sm font-bold text-primary text-nowrap">₱{{ entry.total.toLocaleString('en-PH', {
+                  <p class="text-sm text-primary text-nowrap">₱{{ entry.total.toLocaleString('en-PH', {
                     minimumFractionDigits: 2
                   }) }}</p>
                   <p class="text-xs text-muted">{{ entry.time }}</p>

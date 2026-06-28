@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import { ArrowLeft, Pencil, Archive, Trash2, BoxIcon, ChevronDown, Eye, SquarePen } from '@lucide/vue'
 import CollectionLog from '~/components/Auth/Debtors/CollectionLog.vue'
+import type { CollectionLogGroup } from '~/types/collection'
 
 definePageMeta({ layout: 'auth' })
 
@@ -25,6 +26,44 @@ const debtor = ref(
     target_amount: 700.00,
   }
 )
+
+const logs: CollectionLogGroup[] = [
+  {
+    date: 'Apr 4, 2026',
+    entries: [
+      { id: '1', paymentMethod: 'CASH', type: 'Partial Payment', amount: 32.50, time: '9:23 PM' },
+      { id: '2', paymentMethod: 'GCASH', type: 'Full Payment', amount: 100.00, time: '12:23 PM' },
+    ],
+  },
+  {
+    date: 'Apr 3, 2026',
+    entries: [
+      { id: '1', paymentMethod: 'CASH', type: 'Partial Payment', amount: 32.50, time: '9:23 PM' },
+      { id: '2', paymentMethod: 'GCASH', type: 'Full Payment', amount: 100.00, time: '12:23 PM' },
+    ],
+  },
+  {
+    date: 'Apr 1, 2026',
+    entries: [
+      { id: '1', paymentMethod: 'CASH', type: 'Partial Payment', amount: 32.50, time: '9:23 PM' },
+      { id: '2', paymentMethod: 'GCASH', type: 'Full Payment', amount: 100.00, time: '12:23 PM' },
+    ],
+  },
+  {
+    date: 'Apr 1, 2026',
+    entries: [
+      { id: '1', paymentMethod: 'CASH', type: 'Partial Payment', amount: 32.50, time: '9:23 PM' },
+      { id: '2', paymentMethod: 'GCASH', type: 'Full Payment', amount: 100.00, time: '12:23 PM' },
+    ],
+  },
+  {
+    date: 'Apr 1, 2026',
+    entries: [
+      { id: '1', paymentMethod: 'CASH', type: 'Partial Payment', amount: 32.50, time: '9:23 PM' },
+      { id: '2', paymentMethod: 'GCASH', type: 'Full Payment', amount: 100.00, time: '12:23 PM' },
+    ],
+  },
+]
 
 function getBalanceOpacity(debtor: { remaining_balance: number; target_amount: number }) {
   if (debtor.remaining_balance === 0) return 1
@@ -180,7 +219,7 @@ const handleDelete = () => { showDeleteConfirm.value = true }
     </div>
 
     <div class="p-4 space-y-3 w-full">
-      <CollectionLog />
+      <CollectionLog :data="logs" />
     </div>
 
   </div>
