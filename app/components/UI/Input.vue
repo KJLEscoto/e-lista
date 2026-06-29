@@ -59,7 +59,7 @@ function onBlur(e: FocusEvent) {
 </script>
 
 <template>
-  <div :class="['flex flex-col gap-1.5', disabled && 'opacity-50 pointer-events-none']">
+  <div :class="['flex flex-col gap-1.5', disabled && 'pointer-events-none']">
 
     <!-- Label -->
     <label v-if="label" :for="inputId"
@@ -89,6 +89,7 @@ function onBlur(e: FocusEvent) {
         :aria-describedby="hasError ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined"
         :aria-invalid="hasError || undefined" autocomplete="off" :class="[
           'h-auto py-2.5 w-full rounded-xl bg-transparent text-base text-black outline-none placeholder:text-muted/50 font-primary',
+          disabled ? 'disabled:bg-muted/20 disabled:text-black/50' : '',
           $slots.icon ? 'pl-9' : 'pl-4',
           type === 'password' || $slots.suffix ? 'pr-10' : 'pr-4',
         ]" @input="onInput" @focus="onFocus" @blur="onBlur" />
