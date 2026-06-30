@@ -1,7 +1,6 @@
 <!-- pages/inventory.vue -->
 <script setup lang="ts">
-import { ArrowDown, ArrowUp, ArrowUpDown, ChevronRight, Search } from '@lucide/vue';
-import ProductCard from '~/components/Auth/Inventory/ProductCard.vue';
+import { ArrowDown, ArrowUp, ArrowUpDown, Search } from '@lucide/vue';
 
 definePageMeta({ layout: 'auth' })
 
@@ -128,8 +127,6 @@ function onTouchMove(e: TouchEvent) {
     </section>
 
     <!-- products -->
-    <section class="space-y-3">
-      <ProductCard v-for="product in filteredProducts" :key="product.uid" :product="product" />
-    </section>
+    <UserProductList :products="filteredProducts" />
   </main>
 </template>

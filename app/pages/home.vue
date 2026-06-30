@@ -13,6 +13,12 @@ setLayout(true, true)
 
 const toCollect = ref(2345.30);
 const activeDebtors = ref(5);
+
+const products = [
+  { id: 1, uid: 'sdafasdfasdgfds', name: 'Coca-Cola', category: 'Beverages', price: 1.99, stock: 100, image: '/images/product_placeholder.png' },
+  { id: 2, uid: 'asdgfgsdfg', name: 'Lays Chips', category: 'Snacks', price: 2.49, stock: 9, image: '/images/product_placeholder.png' },
+  { id: 3, uid: 'dfgdfgdfg', name: 'Milk', category: 'Dairy', price: 0.99, stock: 200, image: '/images/product_placeholder.png' },
+]
 </script>
 
 <template>
@@ -56,8 +62,7 @@ const activeDebtors = ref(5);
       </div>
 
       <!-- low on stock list -->
-      <div class="p-4 rounded-2xl h-40 w-full bg-white">
-      </div>
+      <UserProductList :products="products" />
     </section>
 
     <!-- today's log -->

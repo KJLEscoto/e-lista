@@ -1,6 +1,6 @@
 import type { PaymentMethod } from "./payment_method"
 
-interface LogEntry {
+interface Collection {
   id: string
   paymentMethod: PaymentMethod
   amount: number
@@ -10,5 +10,5 @@ interface LogEntry {
 
 export interface CollectionLogGroup {
   date: string
-  entries: LogEntry[]
+  entries: Collection[]
 }
