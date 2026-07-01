@@ -20,8 +20,10 @@ const resolvedDescription = computed(() => description.value || formatted)
             <PageHeader title="Hi, there!" :description="formatted" />
           </template>
         </ClientOnly>
-        <Image :src="photoURL" :alt="user?.displayName ?? 'User'" class="size-16 rounded-full shrink-0"
-          referrerpolicy="no-referrer" />
+        <NuxtLink to="/profile">
+          <Image :src="photoURL" :alt="user?.displayName ?? 'User'" class="size-16 rounded-full shrink-0"
+            referrerpolicy="no-referrer" />
+        </NuxtLink>
       </div>
     </section>
   </header>
