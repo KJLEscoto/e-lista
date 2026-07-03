@@ -19,10 +19,12 @@ const products = [
   { id: 2, uid: 'asdgfgsdfg', name: 'Lays Chips', category: 'Snacks', price: 2.49, stock: 9, image: '/images/product_placeholder.png' },
   { id: 3, uid: 'dfgdfgdfg', name: 'Milk', category: 'Dairy', price: 0.99, stock: 200, image: '/images/product_placeholder.png' },
 ]
+
+const lowStockProducts = computed(() => products.filter(product => product.stock < 10));
 </script>
 
 <template>
-  <main class="space-y-5">
+  <main class="space-y-8">
     <section class="grid grid-cols-2 items-center gap-4 w-full">
       <!-- to collect -->
       <div class="p-4 rounded-2xl bg-white w-full h-full space-y-3">
@@ -53,7 +55,7 @@ const products = [
     <!-- low on stock -->
     <section class="space-y-3">
       <div class="w-full justify-between flex items-center">
-        <h1 class="text-black/80">Inventory Stock</h1>
+        <h1 class="text-black/80">Low on Stock</h1>
         <NuxtLink to="/inventory"
           class="text-sm flex gap-1 items-center text-muted hover:text-primary transition-colors">
           All Inventory
@@ -62,7 +64,9 @@ const products = [
       </div>
 
       <!-- low on stock list -->
-      <UserProductList :products="products" />
+      <div v-for="product in lowStockProducts" :key="product.id" class="w-full">
+        <UserProductStock :product="product" />
+      </div>
     </section>
 
     <!-- today's log -->
