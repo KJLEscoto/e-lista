@@ -15,7 +15,7 @@ const routesWithButton = ['/inventory', '/debtors']
 const showFab = computed(() => routesWithButton.includes(route.path))
 
 // shared modal state via composable — pages can also read this
-const showAddModal = useState('addModal.open', () => false)
+// const showAddModal = useState('addModal.open', () => false)
 
 const isNavVisible = ref(true)
 const lastScrollY = ref(0)
@@ -49,7 +49,7 @@ onBeforeUnmount(() => {
       <!-- FAB -->
       <Transition enter-active-class="transition duration-200 ease-out" enter-from-class="opacity-0 scale-75"
         leave-active-class="transition duration-150 ease-in" leave-to-class="opacity-0 scale-75">
-        <button v-if="showFab" @click="showAddModal = true"
+        <button v-if="showFab"
           class="mb-3 mr-1 flex items-center justify-center size-16 rounded-3xl shadow-md shadow-black/30 bg-primary active:scale-95 transition-all duration-150 ease-in-out cursor-pointer">
           <Plus class="size-6 text-white pointer-events-none shrink-0" />
         </button>

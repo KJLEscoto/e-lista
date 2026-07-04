@@ -161,7 +161,10 @@ const handleDelete = () => { showDeleteConfirm.value = true }
         </section>
       </section>
 
-      <PurchasedLog :data="logs" />
+      <section>
+        <h2 class=" text-black/80 sticky top-16 py-2 bg-foreground z-20">Purchased Log</h2>
+        <PurchasedLog :data="logs" />
+      </section>
 
 
     </div>

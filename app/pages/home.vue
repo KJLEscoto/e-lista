@@ -53,7 +53,7 @@ const lowStockProducts = computed(() => products.filter(product => product.stock
     </section>
 
     <!-- low on stock -->
-    <section class="space-y-3">
+    <section v-if="lowStockProducts.length > 0" class="space-y-3">
       <div class="w-full justify-between flex items-center">
         <h1 class="text-black/80">Low on Stock</h1>
         <NuxtLink to="/inventory"

@@ -50,9 +50,9 @@ export function useAuth() {
       photoURL: currentUser.photoURL ?? '',
       createdAt: new Date().toISOString(),
     })
-    const habitStore = useHabitStore()
-    await habitStore.fetchHabits()
-    await habitStore.resetStaleStreaks()
+    // const habitStore = useHabitStore()
+    // await habitStore.fetchHabits()
+    // await habitStore.resetStaleStreaks()
     habitsReady.value = true
   }
 
@@ -77,10 +77,10 @@ export function useAuth() {
         createdAt: new Date().toISOString(),
       })
     }
-    const habitStore = useHabitStore()
-    await habitStore.fetchHabits()
-    await habitStore.resetStaleStreaks()
-    habitsReady.value = true
+    // const habitStore = useHabitStore()
+    // await habitStore.fetchHabits()
+    // await habitStore.resetStaleStreaks()
+    // habitsReady.value = true
     user.value = $firebase.auth.currentUser
   }
 
@@ -194,9 +194,9 @@ export function useAuth() {
       await fetchSignInMethodsForEmail($firebase.auth, email)
       const result = await signInWithEmailAndPassword($firebase.auth, email, password)
       user.value = result.user
-      const habitStore = useHabitStore()
-      await habitStore.fetchHabits()
-      await habitStore.resetStaleStreaks()
+      // const habitStore = useHabitStore()
+      // await habitStore.fetchHabits()
+      // await habitStore.resetStaleStreaks()
       habitsReady.value = true
       await navigateTo('/home')
     } catch (error: any) {

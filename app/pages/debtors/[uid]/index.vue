@@ -216,11 +216,13 @@ const handleDelete = () => { showDeleteConfirm.value = true }
 
         </section>
       </div>
+
+      <section>
+        <h2 class="text-black/80 sticky top-16 py-2 bg-foreground z-20">Collection Log</h2>
+        <CollectionLog :data="logs" />
+      </section>
     </div>
 
-    <div class="p-4 space-y-3 w-full">
-      <CollectionLog :data="logs" />
-    </div>
 
   </div>
 </template>

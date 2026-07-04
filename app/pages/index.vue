@@ -1,10 +1,8 @@
 <!-- pages/index.vue -->
 <script setup lang="ts">
-const { sampleHabits } = useSampleHabits()
 const signOutSuccess = useState<boolean>('sign-out-success', () => false)
 const deleteAccountSuccess = useState<boolean>('delete-account-success', () => false)
 
-const mascotSrc = '/images/mascot/intro_model.png'
 </script>
 
 <template>

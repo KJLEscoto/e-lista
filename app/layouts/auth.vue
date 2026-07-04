@@ -4,7 +4,7 @@
       <AuthAppHeader v-if="showHeader" />
       <slot />
       <AuthBottomNav v-if="showNav" />
-      <ModalAddProduct />
+      <!-- <ModalAddProduct /> -->
     </ClientOnly>
   </div>
 </template>

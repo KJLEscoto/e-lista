@@ -4,8 +4,6 @@ defineProps<{
   description?: string
 }>()
 
-const route = useRoute()
-
 </script>
 
 <template>

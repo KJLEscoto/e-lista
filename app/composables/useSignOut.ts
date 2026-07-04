@@ -8,7 +8,6 @@ interface UseSignOutReturn {
 
 export const useSignOut = (): UseSignOutReturn => {
   const { signOut } = useAuth()
-  const levelStore = useLevelStore()
 
   const signOutLoading = ref(false)
   const signOutCancelled = ref(false)
@@ -35,7 +34,6 @@ export const useSignOut = (): UseSignOutReturn => {
       if (signOutCancelled.value) return
       try {
         signOutSuccess.value = true
-        levelStore.resetLevelColor()
         await signOut()
       } finally {
         signOutLoading.value = false
