@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   // ✅ Google redirect being processed — stand down completely
   if (processingRedirect.value) return
 
-  const protectedRoutes = ['/home', '/stats', '/profile']
+  const protectedRoutes = ['/home', '/inventory', '/debtors', '/history', '/profile']
   const guestRoutes = ['/', '/login', '/register']
 
   if (!authReady.value) {

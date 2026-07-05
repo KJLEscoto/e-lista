@@ -233,7 +233,7 @@ const handleLogin = async () => {
     <!-- Divider -->
     <div class="flex items-center gap-3">
       <hr class="border-muted/20 w-full" />
-      <UppercaseTitle size="sm">or sign in with email</UppercaseTitle>
+      <p class="text-muted text-nowrap">or sign in with email</p>
       <hr class="border-muted/20 w-full" />
     </div>
 
@@ -263,7 +263,7 @@ const handleLogin = async () => {
         </UIButton>
       </div>
 
-      <ModalForgotPassword v-model="showForgotPassword" />
+      <!-- <ModalForgotPassword v-model="showForgotPassword" /> -->
 
       <UIButton type="submit" size="lg" block :disabled="isAnyLoading || isLockedOut">
         <p>{{ isLoading ? 'Signing in...' : isGoogleLoading ? 'Signing In...' : 'Sign In' }}</p>

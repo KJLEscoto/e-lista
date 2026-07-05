@@ -12,14 +12,9 @@ import {
 } from 'firebase/auth'
 import type { User } from 'firebase/auth'
 
-// ❌ Removed isMobile() and isDev() — no longer needed
-// We always use signInWithPopup now, which opens a new tab on mobile
-// just like Claude.ai does. signInWithRedirect causes hydration mismatches.
-
 export function useAuth() {
   const user = useState<User | null>('auth-user', () => null)
   const authReady = useState<boolean>('auth-ready', () => false)
-  const habitsReady = useState<boolean>('habits-ready', () => false)
 
   // Keep this for backward compat but it won't be set to true anymore
   // since we no longer use signInWithRedirect
@@ -50,10 +45,6 @@ export function useAuth() {
       photoURL: currentUser.photoURL ?? '',
       createdAt: new Date().toISOString(),
     })
-    // const habitStore = useHabitStore()
-    // await habitStore.fetchHabits()
-    // await habitStore.resetStaleStreaks()
-    habitsReady.value = true
   }
 
   const processGoogleUser = async (firebaseUser: User, { allowExisting = true } = {}) => {
@@ -77,10 +68,6 @@ export function useAuth() {
         createdAt: new Date().toISOString(),
       })
     }
-    // const habitStore = useHabitStore()
-    // await habitStore.fetchHabits()
-    // await habitStore.resetStaleStreaks()
-    // habitsReady.value = true
     user.value = $firebase.auth.currentUser
   }
 
@@ -194,10 +181,6 @@ export function useAuth() {
       await fetchSignInMethodsForEmail($firebase.auth, email)
       const result = await signInWithEmailAndPassword($firebase.auth, email, password)
       user.value = result.user
-      // const habitStore = useHabitStore()
-      // await habitStore.fetchHabits()
-      // await habitStore.resetStaleStreaks()
-      habitsReady.value = true
       await navigateTo('/home')
     } catch (error: any) {
       console.error('Sign in error:', error)
@@ -209,7 +192,6 @@ export function useAuth() {
     const { $firebase } = useNuxtApp()
     await $firebase.auth.signOut()
     user.value = null
-    habitsReady.value = false
     await navigateTo('/')
   }
 
@@ -219,7 +201,7 @@ export function useAuth() {
   }
 
   return {
-    user, authReady, habitsReady, processingRedirect, initAuth, signIn,
+    user, authReady, processingRedirect, initAuth, signIn,
     signInWithGoogle, signOut, signOutSuccess, handleRedirectResult,
     sendPasswordReset, signUpWithGoogle, linkPassword
   }

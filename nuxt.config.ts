@@ -61,6 +61,7 @@ export default defineNuxtConfig({
       firebaseStorageBucket: '',
       firebaseMessagingSenderId: '',
       firebaseAppId: '',
+      firebaseMeasurementId: '',
     },
   },
 })
